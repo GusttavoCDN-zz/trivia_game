@@ -25,10 +25,20 @@ Widget.Form = styled.form`
   flex-direction: column;
   width: 100%;
 
-  input,
-  button {
+  input {
     padding: 0.5rem;
     margin: 0.5rem 0;
+  }
+
+  label {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 0.5rem 0;
+    padding: 1rem;
+  }
+
+  .active {
+    background-color: lightgreen;
   }
 `;
 

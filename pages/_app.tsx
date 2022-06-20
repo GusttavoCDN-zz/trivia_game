@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import db from '../db.json';
+import QuizProvider from '../src/Context';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -10,17 +11,19 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const theme = db.theme;
+const { theme } = db;
 
 export default function App({ Component, pageProps }) {
   return (
     <>
-    <Head>
-      <title>{db.title}</title>
-    </Head>
+      <Head>
+        <title>{db.title}</title>
+      </Head>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <QuizProvider>
+          <Component {...pageProps} />
+        </QuizProvider>
       </ThemeProvider>
     </>
   );

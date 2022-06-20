@@ -1,17 +1,20 @@
-import styled from 'styled-components';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import Widget from '../src/components/Widget';
+import Container from '../src/components/Container';
+import Button from '../src/components/Button';
 
-const LoginContainer = styled.div`
-  align-items: center;
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-`;
+export default function LoginPage() {
+  const [name, setName] = useState('');
+  const router = useRouter();
 
-export default function Home() {
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    router.push(`/quiz?name=${name}`);
+  };
+
   return (
-    <LoginContainer>
+    <Container>
       <Widget>
         <Widget.Header>Trivia</Widget.Header>
         <Widget.Content>
@@ -19,12 +22,19 @@ export default function Home() {
             Teste seus conhecimentos com diversos quizzes personalizados e diverta-se
             criando o seu proprio Quiz!
           </p>
-          <Widget.Form>
-            <input type="text" placeholder="Digite seu nome para jogar" />
-            <button type="button">Jogar</button>
+          <Widget.Form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Digite seu nome para jogar"
+              value={name}
+              onChange={({ target }) => setName(target.value)}
+            />
+            <Button type="submit">
+              Jogar
+            </Button>
           </Widget.Form>
         </Widget.Content>
       </Widget>
-    </LoginContainer>
+    </Container>
   );
 }
