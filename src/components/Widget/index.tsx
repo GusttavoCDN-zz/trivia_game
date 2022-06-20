@@ -20,7 +20,7 @@ Widget.Header = styled.div`
   padding: 1rem;
 `;
 
-Widget.form = styled.form`
+Widget.Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
