@@ -38,7 +38,15 @@ Widget.Form = styled.form`
   }
 
   .active {
+    background-color: lightblue;
+  }
+
+  .correct {
     background-color: lightgreen;
+  }
+
+  .wrong {
+    background-color: lightcoral;
   }
 `;
 

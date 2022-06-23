@@ -26,5 +26,6 @@ module.exports = {
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
     'react/no-array-index-key': 'off',
+    'consistent-return': 'off',
   },
 };

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { QuizContext } from '../../Context';
 import Button from '../Button';
+import Timer from '../Timer';
 import Widget from '../Widget';
 
 export default function QuestionWidget() {
@@ -14,11 +15,19 @@ export default function QuestionWidget() {
     setChosenAlternative(Number(value));
   };
 
+  const handleClick = () => {
+    for (let i = 0; i < alternatives.length; i += 1) {
+      if (i === answer) document.querySelector(`#alternative-${i}`).parentElement.classList.add('correct');
+      else document.querySelector(`#alternative-${i}`).parentElement.classList.add('wrong');
+    }
+  };
+
   return (
     <Widget>
       <Widget.Header>
         {`Pergunta ${questionIndex + 1} de ${questions.length}`}
       </Widget.Header>
+      <Timer />
       <Widget.Content>
         <h2>{currentQuestion.title}</h2>
         <Widget.Form>
@@ -40,7 +49,9 @@ export default function QuestionWidget() {
             </label>
           ))}
 
-          <Button>Confirmar</Button>
+          <Button type="button" onClick={handleClick}>
+            Confirmar
+          </Button>
         </Widget.Form>
       </Widget.Content>
     </Widget>
