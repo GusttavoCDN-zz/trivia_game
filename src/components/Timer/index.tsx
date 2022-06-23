@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { QuizContext } from '../../Context';
 
 const TIME_INTERVAL = 1000;
 
 function Timer() {
-  // const { time, setTime } = useContext(QuizContext);
-  const {
-    isTimerOn, setIsTimerOn, time, setTime,
-  } = useContext(QuizContext);
+  const { time, setTime } = useContext(QuizContext);
+  const { isTimerOn, setIsTimerOn } = useContext(QuizContext);
 
   useEffect(() => {
     if (time === 0 || !isTimerOn) return;

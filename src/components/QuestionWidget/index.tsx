@@ -5,15 +5,12 @@ import Timer from '../Timer';
 import Widget from '../Widget';
 
 export default function QuestionWidget() {
+  const { questionIndex, setQuestionIndex, totalQuestions } = useContext(QuizContext);
+
   const {
-    question,
-    setQuestionIndex,
-    totalQuestions,
-    questionIndex,
-    isTimerOn,
-    setIsTimerOn,
-    setTime,
+    question, isTimerOn, setIsTimerOn, setTime,
   } = useContext(QuizContext);
+
   const [chosenAlternative, setChosenAlternative] = useState(-1);
   const [next, setNext] = useState(false);
   const { alternatives, answer } = question;
@@ -49,7 +46,7 @@ export default function QuestionWidget() {
     setChosenAlternative(Number(value));
   };
 
-  const handleClick = () => {
+  const confirmChosen = () => {
     setNext(true);
     setIsTimerOn(false);
   };
@@ -89,7 +86,7 @@ export default function QuestionWidget() {
             </label>
           ))}
 
-          <Button type="button" onClick={handleClick}>
+          <Button type="button" onClick={confirmChosen}>
             Confirmar
           </Button>
           {next && (
