@@ -16,24 +16,20 @@ export default function QuestionWidget() {
   const { alternatives, answer } = question;
 
   const highLightAlternatives = () => {
-    for (let i = 0; i < alternatives.length; i += 1) {
-      if (i === answer) {
-        document
-          .querySelector(`#alternative-${i}`)
-          .parentElement.classList.add('correct');
-      } else {
-        document.querySelector(`#alternative-${i}`).parentElement.classList.add('wrong');
-      }
-    }
+    const alternativesElements = document.querySelectorAll('.alternative');
+    alternativesElements.forEach((alternative) => {
+      if (alternative.id.includes(answer.toString())) {
+        alternative.parentElement.classList.add('correct');
+      } else alternative.parentElement.classList.add('wrong');
+    });
   };
 
   const cleanHighLight = () => {
-    for (let i = 0; i < alternatives.length; i += 1) {
-      document
-        .querySelector(`#alternative-${i}`)
-        .parentElement.classList.remove('correct');
-      document.querySelector(`#alternative-${i}`).parentElement.classList.remove('wrong');
-    }
+    const alternativesElements = document.querySelectorAll('.alternative');
+    alternativesElements.forEach((alternative) => {
+      alternative.parentElement.classList.remove('correct');
+      alternative.parentElement.classList.remove('wrong');
+    });
   };
 
   useEffect(() => {
@@ -79,6 +75,7 @@ export default function QuestionWidget() {
                 name="alternative"
                 id={`alternative-${i}`}
                 checked={chosenAlternative === i}
+                className="alternative"
                 value={i}
                 onChange={handleChange}
               />
