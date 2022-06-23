@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import db from '../../db.json';
 
+const INITIAL_TIME = 5;
 interface IQuestion {
   image: string;
   title: string;
@@ -12,11 +13,14 @@ interface IQuestion {
 }
 
 interface IContext {
-  questions: IQuestion[];
+  question: IQuestion;
   questionIndex: number;
+  totalQuestions: number;
+  time: number;
   setQuestionIndex: Dispatch<SetStateAction<number>>;
   isTimerOn: boolean;
   setIsTimerOn: Dispatch<SetStateAction<boolean>>;
+  setTime: Dispatch<SetStateAction<number>>;
 }
 
 const defaultValue = {} as IContext;
@@ -27,20 +31,25 @@ interface IQuizProviderProps {
 }
 
 export default function QuizProvider({ children }: IQuizProviderProps) {
-  // const [questions, setQuestions] = useState(db.questions);
   const { questions } = db;
   const [questionIndex, setQuestionIndex] = useState(0);
+  const [time, setTime] = useState(INITIAL_TIME);
   const [isTimerOn, setIsTimerOn] = useState(true);
+
+  const currentQuestion = questions[questionIndex];
 
   const quiz = useMemo(
     () => ({
-      questions,
+      question: currentQuestion,
       questionIndex,
+      totalQuestions: questions.length,
+      time,
       isTimerOn,
       setQuestionIndex,
       setIsTimerOn,
+      setTime,
     }),
-    [questions, isTimerOn],
+    [questions, isTimerOn, questionIndex, time],
   );
 
   return <QuizContext.Provider value={quiz}>{children}</QuizContext.Provider>;

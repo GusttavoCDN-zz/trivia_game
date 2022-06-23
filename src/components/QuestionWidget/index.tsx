@@ -1,14 +1,48 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { QuizContext } from '../../Context';
 import Button from '../Button';
 import Timer from '../Timer';
 import Widget from '../Widget';
 
 export default function QuestionWidget() {
-  const { questions, questionIndex } = useContext(QuizContext);
+  const {
+    question,
+    setQuestionIndex,
+    totalQuestions,
+    questionIndex,
+    isTimerOn,
+    setIsTimerOn,
+    setTime,
+  } = useContext(QuizContext);
   const [chosenAlternative, setChosenAlternative] = useState(-1);
-  const currentQuestion = questions[questionIndex];
-  const { alternatives, answer } = currentQuestion;
+  const [next, setNext] = useState(false);
+  const { alternatives, answer } = question;
+
+  const highLightAlternatives = () => {
+    for (let i = 0; i < alternatives.length; i += 1) {
+      if (i === answer) {
+        document
+          .querySelector(`#alternative-${i}`)
+          .parentElement.classList.add('correct');
+      } else {
+        document.querySelector(`#alternative-${i}`).parentElement.classList.add('wrong');
+      }
+    }
+  };
+
+  const cleanHighLight = () => {
+    for (let i = 0; i < alternatives.length; i += 1) {
+      document
+        .querySelector(`#alternative-${i}`)
+        .parentElement.classList.remove('correct');
+      document.querySelector(`#alternative-${i}`).parentElement.classList.remove('wrong');
+    }
+  };
+
+  useEffect(() => {
+    if (isTimerOn) return;
+    highLightAlternatives();
+  }, [isTimerOn]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -16,20 +50,26 @@ export default function QuestionWidget() {
   };
 
   const handleClick = () => {
-    for (let i = 0; i < alternatives.length; i += 1) {
-      if (i === answer) document.querySelector(`#alternative-${i}`).parentElement.classList.add('correct');
-      else document.querySelector(`#alternative-${i}`).parentElement.classList.add('wrong');
-    }
+    setNext(true);
+    setIsTimerOn(false);
+  };
+
+  const changeQuestion = () => {
+    cleanHighLight();
+    setQuestionIndex(questionIndex + 1);
+    setTime(5);
+    setIsTimerOn(true);
+    setChosenAlternative(-1);
   };
 
   return (
     <Widget>
       <Widget.Header>
-        {`Pergunta ${questionIndex + 1} de ${questions.length}`}
+        {`Pergunta ${questionIndex + 1} de ${totalQuestions}`}
       </Widget.Header>
       <Timer />
       <Widget.Content>
-        <h2>{currentQuestion.title}</h2>
+        <h2>{question.title}</h2>
         <Widget.Form>
           {alternatives.map((alternative, i) => (
             <label
@@ -52,6 +92,11 @@ export default function QuestionWidget() {
           <Button type="button" onClick={handleClick}>
             Confirmar
           </Button>
+          {next && (
+            <Button type="button" onClick={changeQuestion}>
+              Next
+            </Button>
+          )}
         </Widget.Form>
       </Widget.Content>
     </Widget>
