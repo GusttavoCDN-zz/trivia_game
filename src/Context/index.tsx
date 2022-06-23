@@ -4,7 +4,7 @@ import React, {
 import db from '../../db.json';
 
 const INITIAL_TIME = 5;
-interface IQuestion {
+export interface IQuestion {
   image: string;
   title: string;
   description: string;

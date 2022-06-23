@@ -1,18 +1,32 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { QuizContext } from '../../Context';
+/* eslint-disable no-unused-vars */
+import React, { useContext, useEffect } from 'react';
+import { QuizContext, IQuestion } from '../../Context';
 import Button from '../Button';
 import Timer from '../Timer';
 import Widget from '../Widget';
 
-export default function QuestionWidget() {
-  const { questionIndex, setQuestionIndex, totalQuestions } = useContext(QuizContext);
+interface IQuestionWidgetProps {
+  question: IQuestion;
+  questionIndex: number;
+  totalQuestions: number;
+  chosenAlternative: number;
+  next: boolean;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  confirmChosen: () => void;
+  changeQuestion: () => void;
+}
 
-  const {
-    question, isTimerOn, setIsTimerOn, setTime,
-  } = useContext(QuizContext);
-
-  const [chosenAlternative, setChosenAlternative] = useState(-1);
-  const [next, setNext] = useState(false);
+export default function QuestionWidget({
+  question,
+  questionIndex,
+  totalQuestions,
+  chosenAlternative,
+  next,
+  handleChange,
+  confirmChosen,
+  changeQuestion,
+}: IQuestionWidgetProps) {
+  const { isTimerOn } = useContext(QuizContext);
   const { alternatives, answer } = question;
 
   const highLightAlternatives = () => {
@@ -24,36 +38,10 @@ export default function QuestionWidget() {
     });
   };
 
-  const cleanHighLight = () => {
-    const alternativesElements = document.querySelectorAll('.alternative');
-    alternativesElements.forEach((alternative) => {
-      alternative.parentElement.classList.remove('correct');
-      alternative.parentElement.classList.remove('wrong');
-    });
-  };
-
   useEffect(() => {
     if (isTimerOn) return;
     highLightAlternatives();
   }, [isTimerOn]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setChosenAlternative(Number(value));
-  };
-
-  const confirmChosen = () => {
-    setNext(true);
-    setIsTimerOn(false);
-  };
-
-  const changeQuestion = () => {
-    cleanHighLight();
-    setQuestionIndex(questionIndex + 1);
-    setTime(5);
-    setIsTimerOn(true);
-    setChosenAlternative(-1);
-  };
 
   return (
     <Widget>
