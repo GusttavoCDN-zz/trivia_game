@@ -37,6 +37,7 @@ export default function QuizPage() {
     setChosenAlternative(-1);
     setNext(false);
   };
+
   return (
     <Container>
       <QuestionWidget
@@ -48,6 +49,7 @@ export default function QuizPage() {
         handleChange={handleChange}
         confirmChosen={confirmChosen}
         next={next}
+        setNext={setNext}
       />
     </Container>
   );

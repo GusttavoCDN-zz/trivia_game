@@ -11,6 +11,7 @@ interface IQuestionWidgetProps {
   totalQuestions: number;
   chosenAlternative: number;
   next: boolean;
+  setNext: (next: boolean) => void;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   confirmChosen: () => void;
   changeQuestion: () => void;
@@ -22,6 +23,7 @@ export default function QuestionWidget({
   totalQuestions,
   chosenAlternative,
   next,
+  setNext,
   handleChange,
   confirmChosen,
   changeQuestion,
@@ -41,6 +43,10 @@ export default function QuestionWidget({
   useEffect(() => {
     if (isTimerOn) return;
     highLightAlternatives();
+  }, [isTimerOn]);
+
+  useEffect(() => {
+    if (!isTimerOn) setNext(true);
   }, [isTimerOn]);
 
   return (
@@ -71,12 +77,12 @@ export default function QuestionWidget({
             </label>
           ))}
 
-          <Button type="button" onClick={confirmChosen}>
+          <Button type="button" onClick={confirmChosen} disabled={next}>
             Confirmar
           </Button>
           {next && (
             <Button type="button" onClick={changeQuestion}>
-              Next
+              Proxima
             </Button>
           )}
         </Widget.Form>
