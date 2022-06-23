@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import Widget from '../src/components/Widget';
 import Container from '../src/components/Container';
 import Button from '../src/components/Button';
+import { saveUSerOnStorage } from '../src/helpers/storage';
 
-export default function LoginPage() {
+function LoginPage() {
   const [name, setName] = useState('');
   const router = useRouter();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    saveUSerOnStorage(name);
     router.push(`/quiz?name=${name}`);
   };
 
@@ -29,12 +31,12 @@ export default function LoginPage() {
               value={name}
               onChange={({ target }) => setName(target.value)}
             />
-            <Button type="submit">
-              Jogar
-            </Button>
+            <Button type="submit">Jogar</Button>
           </Widget.Form>
         </Widget.Content>
       </Widget>
     </Container>
   );
 }
+
+export default LoginPage;

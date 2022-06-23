@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Widget = styled.section`
+const Widget: any = styled.section`
   border: 1px solid black;
   display: flex;
   flex-direction: column;

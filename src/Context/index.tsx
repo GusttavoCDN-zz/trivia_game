@@ -16,9 +16,11 @@ interface IContext {
   question: IQuestion;
   questionIndex: number;
   totalQuestions: number;
+  assertions: number;
   time: number;
-  setQuestionIndex: Dispatch<SetStateAction<number>>;
   isTimerOn: boolean;
+  setAssertions: Dispatch<SetStateAction<number>>;
+  setQuestionIndex: Dispatch<SetStateAction<number>>;
   setIsTimerOn: Dispatch<SetStateAction<boolean>>;
   setTime: Dispatch<SetStateAction<number>>;
 }
@@ -33,6 +35,7 @@ interface IQuizProviderProps {
 export default function QuizProvider({ children }: IQuizProviderProps) {
   const { questions } = db;
   const [questionIndex, setQuestionIndex] = useState(0);
+  const [assertions, setAssertions] = useState(0);
   const [time, setTime] = useState(INITIAL_TIME);
   const [isTimerOn, setIsTimerOn] = useState(true);
 
@@ -43,13 +46,15 @@ export default function QuizProvider({ children }: IQuizProviderProps) {
       question: currentQuestion,
       questionIndex,
       totalQuestions: questions.length,
+      assertions,
       time,
       isTimerOn,
+      setAssertions,
       setQuestionIndex,
       setIsTimerOn,
       setTime,
     }),
-    [questions, isTimerOn, questionIndex, time],
+    [questions, isTimerOn, questionIndex, time, assertions],
   );
 
   return <QuizContext.Provider value={quiz}>{children}</QuizContext.Provider>;
