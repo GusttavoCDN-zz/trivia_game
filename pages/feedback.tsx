@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
+import { useRouter } from 'next/router';
 import Container from '../src/components/Container';
 import Widget from '../src/components/Widget';
 import { QuizContext } from '../src/Context';
+import Button from '../src/components/Button';
 
 function feedback() {
+  const router = useRouter();
   const { assertions, totalQuestions } = useContext(QuizContext);
   return (
     <Container>
@@ -21,6 +24,7 @@ function feedback() {
             {' '}
             questões.
           </p>
+          <Button onClick={() => router.push('/')}>Jogar Novamente</Button>
         </Widget.Content>
       </Widget>
     </Container>
