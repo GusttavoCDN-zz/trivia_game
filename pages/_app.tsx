@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import db from '../db.json';
+import { createGlobalStyle } from 'styled-components';
+import React from 'react';
 import QuizProvider from '../src/Context';
 
 const GlobalStyle = createGlobalStyle`
@@ -11,20 +11,22 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const { theme } = db;
+interface IApp {
+  Component: React.ComponentType<any>;
+  pageProps: any;
+}
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: IApp) {
   return (
     <>
       <Head>
-        <title>{db.title}</title>
+        <title>Trivia</title>
       </Head>
       <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <QuizProvider>
-          <Component {...pageProps} />
-        </QuizProvider>
-      </ThemeProvider>
+
+      <QuizProvider>
+        <Component {...pageProps} />
+      </QuizProvider>
     </>
   );
 }

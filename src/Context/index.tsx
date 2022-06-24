@@ -1,7 +1,7 @@
 import React, { createContext, useMemo, useState } from 'react';
-import db from '../../db.json';
 import IContext from '../interfaces/IContext';
 import IQuiz from '../interfaces/IQuiz';
+import INITIAL_QUIZZES from '../data';
 
 const INITIAL_TIME = 5;
 
@@ -13,32 +13,28 @@ interface IQuizProviderProps {
 }
 
 export default function QuizProvider({ children }: IQuizProviderProps) {
-  const { questions } = db;
-  const [questionIndex, setQuestionIndex] = useState(0);
-  const [quizes, setQuizes] = useState<IQuiz[]>([]);
+  const [quizes, setQuizes] = useState<IQuiz[]>(INITIAL_QUIZZES);
+  const [quizIndex, setQuizIndex] = useState(0);
   const [assertions, setAssertions] = useState(0);
   const [time, setTime] = useState(INITIAL_TIME);
   const [isTimerOn, setIsTimerOn] = useState(true);
 
-  const currentQuestion = questions[questionIndex];
+  const quiz = quizes[quizIndex];
 
-  const quiz = useMemo(
+  const context = useMemo(
     () => ({
-      question: currentQuestion,
+      quiz,
       quizes,
-      questionIndex,
-      totalQuestions: questions.length,
       assertions,
       time,
       isTimerOn,
       setAssertions,
-      setQuestionIndex,
       setIsTimerOn,
       setTime,
       setQuizes,
     }),
-    [questions, isTimerOn, questionIndex, time, assertions, quizes],
+    [quiz, isTimerOn, quizIndex, time, assertions, quizes],
   );
 
-  return <QuizContext.Provider value={quiz}>{children}</QuizContext.Provider>;
+  return <QuizContext.Provider value={context}>{children}</QuizContext.Provider>;
 }

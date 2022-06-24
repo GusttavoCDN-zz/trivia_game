@@ -6,9 +6,14 @@ import { QuizContext } from '../src/Context';
 import Header from '../src/components/Header';
 
 function QuizPage() {
-  const { questionIndex, setQuestionIndex, totalQuestions } = useContext(QuizContext);
-  const { question, setIsTimerOn, setTime } = useContext(QuizContext);
+  const { quiz } = useContext(QuizContext);
+  const [questions, setQuestions] = useState(quiz.questions);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const { setIsTimerOn, setTime } = useContext(QuizContext);
   const { setAssertions, assertions } = useContext(QuizContext);
+
+  const question = questions[questionIndex];
+  const totalQuestions = questions.length;
 
   const [chosenAlternative, setChosenAlternative] = useState(-1);
   const [next, setNext] = useState(false);
