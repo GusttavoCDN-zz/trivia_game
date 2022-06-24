@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import Container from '../src/components/Container';
 import QuestionWidget from '../src/components/QuestionWidget';
@@ -6,17 +6,20 @@ import { QuizContext } from '../src/Context';
 import Header from '../src/components/Header';
 
 function QuizPage() {
-  const { quiz } = useContext(QuizContext);
-  const [questions, setQuestions] = useState(quiz.questions);
-  const [questionIndex, setQuestionIndex] = useState(0);
-  const { setIsTimerOn, setTime } = useContext(QuizContext);
+  const { quizzes, setIsTimerOn, setTime } = useContext(QuizContext);
   const { setAssertions, assertions } = useContext(QuizContext);
 
+  const [next, setNext] = useState(false);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [chosenAlternative, setChosenAlternative] = useState(-1);
+
+  const quiz = useMemo(
+    () => quizzes[Math.floor(Math.random() * quizzes.length)],
+    [quizzes],
+  );
+  const { questions } = quiz;
   const question = questions[questionIndex];
   const totalQuestions = questions.length;
-
-  const [chosenAlternative, setChosenAlternative] = useState(-1);
-  const [next, setNext] = useState(false);
 
   const router = useRouter();
 
@@ -45,16 +48,13 @@ function QuizPage() {
 
   const changeQuestion = () => {
     calculateScore();
-    if (questionIndex === totalQuestions - 1) {
-      router.push('/feedback');
-      return;
-    }
     cleanHighLight();
-    setQuestionIndex(questionIndex + 1);
-    setTime(5);
+    setTime(30);
     setIsTimerOn(true);
     setChosenAlternative(-1);
     setNext(false);
+    if (questionIndex === totalQuestions - 1) router.push('/feedback');
+    else setQuestionIndex(questionIndex + 1);
   };
 
   return (

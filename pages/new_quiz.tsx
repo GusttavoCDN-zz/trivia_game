@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
 import Button from '../src/components/Button';
 import Container from '../src/components/Container';
@@ -14,12 +15,14 @@ const INITIAL_ALTERNATIVES = {
 };
 
 function FormQuizPage() {
-  const { quizes, setQuizes } = useContext(QuizContext);
+  const { quizzes, setQuizzes } = useContext(QuizContext);
   const [quiz, setQuiz] = useState<IQuiz>({ title: '', questions: [] });
   const [title, setTitle] = useState('');
   const [answer, setAnswer] = useState('');
   const [alternatives, setAlternatives] = useState(INITIAL_ALTERNATIVES);
   const [questionIndex, setQuestionIndex] = useState(1);
+
+  const router = useRouter();
 
   const handleChangeAlternatives = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
@@ -80,8 +83,9 @@ function FormQuizPage() {
     </>
   );
   const saveQuiz = () => {
-    setQuizes([...quizes, quiz]);
+    setQuizzes([...quizzes, quiz]);
     global.alert('Quiz Salvo com sucesso!');
+    router.push('/');
   };
 
   const renderSaveQuizButton = () => (

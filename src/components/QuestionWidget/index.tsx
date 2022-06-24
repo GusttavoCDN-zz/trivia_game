@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect } from 'react';
-import { QuizContext, IQuestion } from '../../Context';
+import { QuizContext } from '../../Context';
+import IQuestion from '../../interfaces/IQuestion';
 import Button from '../Button';
 import Timer from '../Timer';
 import Widget from '../Widget';

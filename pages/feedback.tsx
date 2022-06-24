@@ -7,23 +7,13 @@ import Button from '../src/components/Button';
 
 function feedback() {
   const router = useRouter();
-  const { assertions, totalQuestions } = useContext(QuizContext);
+  const { assertions } = useContext(QuizContext);
   return (
     <Container>
       <Widget>
         <Widget.Header>Feedback</Widget.Header>
         <Widget.Content>
-          <p>
-            Você acertou
-            {' '}
-            {assertions}
-            {' '}
-            de
-            {' '}
-            {totalQuestions}
-            {' '}
-            questões.
-          </p>
+          <p>{`Você acertou ${assertions}`}</p>
           <Button onClick={() => router.push('/')}>Jogar Novamente</Button>
         </Widget.Content>
       </Widget>
