@@ -33,6 +33,9 @@ function LoginPage() {
             />
             <Button type="submit">Jogar</Button>
           </Widget.Form>
+          <Button type="button" onClick={() => router.push('/new_quiz')}>
+            Criar Quiz
+          </Button>
         </Widget.Content>
       </Widget>
     </Container>
