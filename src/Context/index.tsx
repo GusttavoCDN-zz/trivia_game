@@ -1,31 +1,9 @@
-import React, {
-  createContext, Dispatch, SetStateAction, useMemo, useState,
-} from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 import db from '../../db.json';
-import { IQuiz } from '../../pages/new_quiz';
+import IContext from '../interfaces/IContext';
+import IQuiz from '../interfaces/IQuiz';
 
 const INITIAL_TIME = 5;
-export interface IQuestion {
-  image?: string;
-  title: string;
-  description?: string;
-  answer: number;
-  alternatives: string[];
-}
-interface IContext {
-  question: IQuestion;
-  questionIndex: number;
-  quizes: IQuiz[];
-  totalQuestions: number;
-  assertions: number;
-  time: number;
-  isTimerOn: boolean;
-  setAssertions: Dispatch<SetStateAction<number>>;
-  setQuestionIndex: Dispatch<SetStateAction<number>>;
-  setIsTimerOn: Dispatch<SetStateAction<boolean>>;
-  setTime: Dispatch<SetStateAction<number>>;
-  setQuizes: Dispatch<SetStateAction<IQuiz[]>>;
-}
 
 const defaultValue = {} as IContext;
 export const QuizContext = createContext(defaultValue);

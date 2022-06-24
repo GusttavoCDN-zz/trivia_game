@@ -2,12 +2,9 @@ import React, { useContext, useState } from 'react';
 import Button from '../src/components/Button';
 import Container from '../src/components/Container';
 import Widget from '../src/components/Widget';
-import { IQuestion, QuizContext } from '../src/Context';
-
-export interface IQuiz {
-  title: string;
-  questions: IQuestion[];
-}
+import { QuizContext } from '../src/Context';
+import IQuestion from '../src/interfaces/IQuestion';
+import IQuiz from '../src/interfaces/IQuiz';
 
 const INITIAL_ALTERNATIVES = {
   alternative1: '',
@@ -18,10 +15,7 @@ const INITIAL_ALTERNATIVES = {
 
 function FormQuizPage() {
   const { quizes, setQuizes } = useContext(QuizContext);
-  const [quiz, setQuiz] = useState<IQuiz>({
-    title: '',
-    questions: [],
-  });
+  const [quiz, setQuiz] = useState<IQuiz>({ title: '', questions: [] });
   const [title, setTitle] = useState('');
   const [answer, setAnswer] = useState('');
   const [alternatives, setAlternatives] = useState(INITIAL_ALTERNATIVES);
@@ -38,6 +32,7 @@ function FormQuizPage() {
       answer: Number(answer) - 1,
       alternatives: Object.values(alternatives),
     };
+
     setQuiz({ ...quiz, questions: [...quiz.questions, question] });
     setTitle('');
     setAnswer('');
@@ -61,7 +56,13 @@ function FormQuizPage() {
     <>
       <input
         type="text"
-        name="title"
+        placeholder="Digite o nome do seu QUIZ"
+        value={quiz.title}
+        onChange={(event) => setQuiz({ ...quiz, title: event.target.value })}
+      />
+
+      <input
+        type="text"
         value={title}
         placeholder="Digite o enunciado da questão"
         onChange={({ target }) => setTitle(target.value)}
@@ -69,7 +70,6 @@ function FormQuizPage() {
       {renderAlternatives()}
       <input
         type="number"
-        name="answer"
         value={answer}
         placeholder="Digite o número da resposta correta"
         onChange={({ target }) => setAnswer(target.value)}
