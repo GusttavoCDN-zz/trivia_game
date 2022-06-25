@@ -54,8 +54,8 @@ export default function QuestionWidget({
     <Widget>
       <Widget.Header>
         {`Pergunta ${questionIndex + 1} de ${totalQuestions}`}
+        <Timer />
       </Widget.Header>
-      <Timer />
       <Widget.Content>
         <h2>{question.title}</h2>
         <Widget.Form>
@@ -69,6 +69,7 @@ export default function QuestionWidget({
                 type="radio"
                 name="alternative"
                 id={`alternative-${i}`}
+                style={{ display: 'none' }}
                 checked={chosenAlternative === i}
                 className="alternative"
                 value={i}

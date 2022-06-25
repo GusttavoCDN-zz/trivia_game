@@ -7,6 +7,13 @@ import { QuizContext } from '../src/Context';
 import IQuestion from '../src/interfaces/IQuestion';
 import IQuiz from '../src/interfaces/IQuiz';
 
+const styles = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+};
+
 const INITIAL_ALTERNATIVES = {
   alternative1: '',
   alternative2: '',
@@ -95,16 +102,18 @@ function FormQuizPage() {
   );
 
   return (
-    <Container>
-      <Widget>
-        <Widget.Header>Novo Quiz</Widget.Header>
-        <Widget.Content>
-          <Widget.Form>
-            {questionIndex <= 2 ? renderForm() : renderSaveQuizButton()}
-          </Widget.Form>
-        </Widget.Content>
-      </Widget>
-    </Container>
+    <div style={styles}>
+      <Container>
+        <Widget>
+          <Widget.Header>Novo Quiz</Widget.Header>
+          <Widget.Content>
+            <Widget.Form>
+              {questionIndex <= 2 ? renderForm() : renderSaveQuizButton()}
+            </Widget.Form>
+          </Widget.Content>
+        </Widget>
+      </Container>
+    </div>
   );
 }
 
