@@ -17,6 +17,7 @@ function QuizPage() {
     () => quizzes[Math.floor(Math.random() * quizzes.length)],
     [quizzes],
   );
+
   const { questions } = quiz;
   const question = questions[questionIndex];
   const totalQuestions = questions.length;
