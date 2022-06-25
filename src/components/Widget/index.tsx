@@ -61,7 +61,8 @@ Widget.Form = styled.form`
   }
 
   .wrong {
-    background-color: #ff0000;
+    background-color: #54b4da;
+    text-decoration: line-through;
   }
 `;
 
